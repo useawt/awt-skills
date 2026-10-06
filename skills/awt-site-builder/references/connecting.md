@@ -5,7 +5,9 @@
 - **An agent with a shell**, such as Claude Code (terminal, desktop app or IDE).
   Chat apps without a shell cannot use SSH; see "Without SSH" below.
 - **SSH access to the site's server, with WP-CLI.** Most managed WordPress hosts
-  offer both. Some cheap shared plans offer neither; then use "Without SSH".
+  offer both. Some cheap shared plans offer neither; then use "Without SSH". If SSH
+  works but `wp` is missing, ask the owner whether you may install WP-CLI in their
+  home folder, using the official download from wp-cli.org.
 
 ## First-time setup over SSH
 
@@ -33,11 +35,12 @@ host's panel yourself, and never ask for the panel password.
    ```bash
    ssh mysite 'wp --info | head -3'
    ssh mysite 'find ~ -maxdepth 4 -name wp-config.php 2>/dev/null'
-   ssh mysite 'cd public_html && wp option get siteurl'
+   ssh mysite 'cd FOLDER && wp option get siteurl'
    ```
    The folder holding `wp-config.php` (often `public_html`, `public`, `www` or
-   `htdocs`) is the WordPress folder. `wp option get siteurl` must print the
-   site's address.
+   `htdocs`) is the WordPress folder (`FOLDER` above, `WP` in SKILL.md).
+   `wp option get siteurl` must print the site's address. If the account holds
+   several sites, ask the owner which one.
 
 To revoke access later, the owner deletes the key in the host's panel.
 
@@ -63,12 +66,14 @@ the check scripts need WP-CLI, so you lose `awt-check.php`.
 
 1. **Owner:** in WordPress, go to Users, then Profile, then Application Passwords.
    Create one named for the agent. Save it in a file only the owner can read, so
-   the agent uses it without ever seeing it:
+   the agent uses it without ever seeing it. Write the password **without its
+   spaces**; WordPress accepts it either way, and this file format splits on spaces:
    ```
    # ~/.awt-site.netrc   (chmod 600)
-   machine example.com login OWNER_USERNAME password xxxx xxxx xxxx xxxx xxxx xxxx
+   machine example.com login OWNER_USERNAME password xxxxxxxxxxxxxxxxxxxxxxxx
    ```
 2. **Agent:** use it with `curl --netrc-file ~/.awt-site.netrc`. Never print the file.
+   To stop access, the owner revokes the application password in the same place.
 
 | Task | Request |
 |---|---|

@@ -140,11 +140,14 @@ These rules protect the owner's site. Follow them even when asked to hurry.
    clear yes** for that specific change. Drafts are always fine.
 2. **The owner edits pages by hand too.** Always read the current content right
    before you change a page. Never write an old local copy over it. Use `expect=`.
-3. **Never delete.** Move pages and media to the trash (`wp post delete ID`
-   without `--force`). Never run `wp db reset`, `wp site empty`, or `DROP`.
+3. **Never delete.** Move pages to the trash (`wp post delete ID`, never with
+   `--force`). Media cannot go to the trash, so never remove media; tell the owner
+   what could go. Never run `wp db reset`, `wp site empty`, or `DROP`.
 4. **Back up before bulk changes** (more than one page, search-replace, settings):
    `wp db export ~/awt-skill/backup-$(date +%Y%m%d-%H%M).sql --tables="$(wp db tables --format=csv)"`.
-   Keep the newest three and remove older ones. Run `wp search-replace` with
+   That saves WordPress's own tables (pages, media records, settings), which is
+   everything this skill changes, and nothing from other sites sharing the
+   database. Keep the newest three and remove older ones. Run `wp search-replace` with
    `--dry-run` first and show the owner the count.
 5. **Write content only through `awt-save-page.php`** or `wp_update_post( wp_slash( ... ) )`.
    Never raw SQL: it silently strips the backslashes in attribute escapes.

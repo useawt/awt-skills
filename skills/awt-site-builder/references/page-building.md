@@ -34,9 +34,9 @@ Layout habits that make a page look like AWT:
   switches to the dark palette by itself; never set colors by hand.
 - **Width.** `maxWidth` `content` (the default) for most sections, `narrow` for
   long text, `wide` for big grids and tables.
-- **Ordinary pages** (default template, no hero) open with a short section: one
-  or two sentences in a `body-02` paragraph, no heading, since the page title is
-  right above it.
+- **Ordinary pages** (default template, no hero) usually open with a short
+  section: one or two sentences in a `body-02` paragraph and no heading, since the
+  page title is right above it.
 - **Landing pages** use the "Page without title" template (`template=page-no-title`)
   and open with `awt/hero` holding the heading 1. Other pages keep the default
   template, which prints the page title as heading 1, so their first heading is a

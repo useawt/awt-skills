@@ -273,7 +273,11 @@ if ( isset( $opts['post'] ) ) {
 		exit( 1 );
 	}
 	$content = $target->post_content;
-} elseif ( isset( $opts['file'] ) && is_readable( $opts['file'] ) ) {
+} elseif ( isset( $opts['file'] ) ) {
+	if ( ! is_readable( $opts['file'] ) ) {
+		echo "Cannot read {$opts['file']}. Give the full path; ~ is not expanded here, so use \$HOME.\n";
+		exit( 1 );
+	}
 	$content = file_get_contents( $opts['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 } else {
 	echo "Usage: wp eval-file awt-check.php file=<path> [template=page-no-title]  or  post=<id>\n";

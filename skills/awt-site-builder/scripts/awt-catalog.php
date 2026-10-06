@@ -35,21 +35,24 @@ $awt_block_types = static function () {
 };
 
 $theme = wp_get_theme();
-$awt   = ( 'awt' === $theme->get_template() );
+// Any AWT build carries AWT Settings, whatever its theme folder is called.
+$awt = function_exists( 'AWT\Theme\Settings\all' );
 
 if ( 'summary' === $mode ) {
 	$awt_line( 'Site: ' . home_url() . '  (WordPress ' . get_bloginfo( 'version' ) . ')' );
 	$awt_line( 'Theme: ' . $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ) . ( $awt ? '' : '  <- AWT is NOT the active theme' ) );
-	$plugin_version = defined( 'AWT_BLOCKS_VERSION' ) ? AWT_BLOCKS_VERSION : '';
-	if ( ! $plugin_version ) {
-		foreach ( get_option( 'active_plugins', array() ) as $file ) {
-			if ( 0 === strpos( $file, 'awt-blocks' ) || false !== strpos( $file, '/awt-blocks.php' ) ) {
-				$data           = get_plugin_data( WP_PLUGIN_DIR . '/' . $file, false, false );
-				$plugin_version = $data['Version'];
-			}
+	if ( ! function_exists( 'get_plugin_data' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	}
+	$plugin = '';
+	foreach ( get_option( 'active_plugins', array() ) as $file ) {
+		$data = get_plugin_data( WP_PLUGIN_DIR . '/' . $file, false, false );
+		if ( 0 === strpos( $data['TextDomain'], 'awt' ) && false !== stripos( $data['Name'], 'blocks' ) ) {
+			$plugin = $data['Name'] . ' ' . $data['Version'];
 		}
 	}
-	$awt_line( 'AWT Blocks plugin: ' . ( $plugin_version ? $plugin_version : 'not active' ) );
+	$count = count( $awt_block_types() );
+	$awt_line( 'AWT blocks plugin: ' . ( $count ? ( $plugin ? $plugin : 'active' ) . ", $count blocks" : 'not active  <- install and activate it before building pages' ) );
 	$awt_line( 'Front page: ' . ( 'page' === get_option( 'show_on_front' ) ? 'page ' . get_option( 'page_on_front' ) : 'latest posts' ) );
 
 	$awt_line( "\nBLOCKS (name: title. description)" );
@@ -182,21 +185,21 @@ if ( 'settings' === $mode ) {
 }
 
 if ( 'page' === $mode ) {
-	$post = get_post( (int) $arg );
-	if ( ! $post ) {
+	$target = get_post( (int) $arg );
+	if ( ! $target ) {
 		$awt_line( "No post with ID $arg." );
 		exit( 1 );
 	}
-	$awt_line( "ID {$post->ID} ({$post->post_type}, {$post->post_status}): {$post->post_title}" );
-	$awt_line( 'URL: ' . get_permalink( $post ) );
-	$editor = get_userdata( (int) get_post_meta( $post->ID, '_edit_last', true ) );
-	$awt_line( 'Last edited: ' . $post->post_modified . ( $editor ? ' by ' . $editor->display_name : '' ) );
-	$awt_line( 'Content hash (md5): ' . md5( $post->post_content ) );
-	$awt_line( 'Template: ' . ( get_page_template_slug( $post ) ? get_page_template_slug( $post ) : 'default' ) );
-	$revisions = wp_get_post_revisions( $post->ID, array( 'posts_per_page' => 1 ) );
+	$awt_line( "ID {$target->ID} ({$target->post_type}, {$target->post_status}): {$target->post_title}" );
+	$awt_line( 'URL: ' . get_permalink( $target ) );
+	$editor = get_userdata( (int) get_post_meta( $target->ID, '_edit_last', true ) );
+	$awt_line( 'Last edited: ' . $target->post_modified . ( $editor ? ' by ' . $editor->display_name : '' ) );
+	$awt_line( 'Content hash (md5): ' . md5( $target->post_content ) );
+	$awt_line( 'Template: ' . ( get_page_template_slug( $target ) ? get_page_template_slug( $target ) : 'default' ) );
+	$revisions = wp_get_post_revisions( $target->ID, array( 'posts_per_page' => 1 ) );
 	$awt_line( 'Newest revision: ' . ( $revisions ? key( $revisions ) : 'none' ) );
-	$autosave = wp_get_post_autosave( $post->ID );
-	if ( $autosave && $autosave->post_modified > $post->post_modified ) {
+	$autosave = wp_get_post_autosave( $target->ID );
+	if ( $autosave && $autosave->post_modified > $target->post_modified ) {
 		$awt_line( 'WARNING: someone has unsaved changes in the editor (autosave ' . $autosave->ID . ', ' . $autosave->post_modified . ').' );
 	}
 	return;

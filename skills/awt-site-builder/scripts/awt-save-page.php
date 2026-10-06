@@ -3,7 +3,7 @@
  * Save block markup to a page safely.
  *
  * New draft (the default, and the safe first step):
- *   wp eval-file awt-save-page.php file=/path/page.html title="About us" [template=page-no-title] [parent=12] [type=page]
+ *   wp eval-file awt-save-page.php file=/path/page.html title="About us" [template=page-no-title] [parent=12] [type=page] [status=draft|pending|private]
  *
  * Replace an existing page's content (only with the owner's go-ahead):
  *   wp eval-file awt-save-page.php file=/path/page.html id=123 expect=<md5>
@@ -16,6 +16,9 @@
  * revision of the old content, writes through wp_slash() so attribute escapes
  * survive, and checks that what was stored is exactly what you sent.
  * It never publishes a new page, and never deletes anything.
+ *
+ * Changes are recorded under the first administrator. Add WP-CLI's own
+ * --user=<login> to record them under the owner's account instead.
  */
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- CLI output.
@@ -34,8 +37,11 @@ $fail = static function ( $msg ) {
 	exit( 1 );
 };
 
-if ( empty( $opts['file'] ) || ! is_readable( $opts['file'] ) ) {
+if ( empty( $opts['file'] ) ) {
 	$fail( 'Give the markup file: file=/path/page.html' );
+}
+if ( ! is_readable( $opts['file'] ) ) {
+	$fail( "Cannot read {$opts['file']}. Give the full path; ~ is not expanded here, so use \$HOME." );
 }
 $content = file_get_contents( $opts['file'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 if ( trim( $content ) === '' ) {
@@ -119,6 +125,9 @@ if ( $target ) {
 } else {
 	$type   = isset( $opts['type'] ) ? $opts['type'] : 'page';
 	$status = isset( $opts['status'] ) ? $opts['status'] : 'draft';
+	if ( ! post_type_exists( $type ) ) {
+		$fail( "There is no post type \"$type\". Use page or post." );
+	}
 	if ( ! in_array( $status, array( 'draft', 'pending', 'private' ), true ) ) {
 		$fail( 'A new page is saved as draft, pending or private. Publish it after the owner approves.' );
 	}
