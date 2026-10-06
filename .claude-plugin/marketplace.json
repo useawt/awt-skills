@@ -1,0 +1,13 @@
+{
+  "name": "awt",
+  "owner": { "name": "AWT", "url": "https://useawt.com" },
+  "metadata": { "description": "AI agent skills for sites built with AWT." },
+  "plugins": [
+    {
+      "name": "awt",
+      "source": "./",
+      "description": "Build and edit pages on WordPress sites that run AWT, over SSH and WP-CLI.",
+      "version": "1.0.0"
+    }
+  ]
+}

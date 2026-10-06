@@ -1,0 +1,511 @@
+{
+ "values": {
+  "awt/accordion": {
+   "align": [
+    "start",
+    "end"
+   ],
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/button": {
+   "iconPosition": [
+    "leading",
+    "trailing"
+   ],
+   "kind": [
+    "primary",
+    "secondary",
+    "tertiary",
+    "ghost",
+    "danger",
+    "danger--tertiary",
+    "danger--ghost"
+   ],
+   "size": [
+    "sm",
+    "md",
+    "lg",
+    "xl",
+    "2xl"
+   ],
+   "target": [
+    "",
+    "_blank",
+    "_parent",
+    "_top"
+   ],
+   "type": [
+    "button",
+    "submit"
+   ]
+  },
+  "awt/code-snippet": {
+   "variant": [
+    "single",
+    "multi",
+    "inline"
+   ]
+  },
+  "awt/color-scheme-toggle": {
+   "kind": [
+    "icon-only",
+    "with-label",
+    "segmented"
+   ]
+  },
+  "awt/content-switcher": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/data-table": {
+   "defaultSortDirection": [
+    "asc",
+    "desc"
+   ],
+   "size": [
+    "xs",
+    "sm",
+    "md",
+    "lg",
+    "xl"
+   ]
+  },
+  "awt/dropdown": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/faq-item": {
+   "level": [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ]
+  },
+  "awt/feature-grid": {
+   "columns": [
+    "2",
+    "3",
+    "4"
+   ],
+   "gap": [
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09"
+   ]
+  },
+  "awt/form": {
+   "method": [
+    "get",
+    "post"
+   ]
+  },
+  "awt/header-action": {
+   "kind": [
+    "icon-only",
+    "with-label"
+   ]
+  },
+  "awt/header-brand": {
+   "kind": [
+    "text-only",
+    "text-with-prefix",
+    "logo-only",
+    "logo-with-text",
+    "logo-with-text-and-prefix"
+   ]
+  },
+  "awt/header-nav-item": {
+   "matchMode": [
+    "exact",
+    "prefix"
+   ]
+  },
+  "awt/hero": {
+   "imageRatio": [
+    "16x9",
+    "4x3",
+    "3x2",
+    "1x1",
+    "3x4",
+    "4x5"
+   ],
+   "imageWidth": [
+    "narrow",
+    "equal",
+    "wide"
+   ],
+   "layout": [
+    "text-only",
+    "text-with-image-right"
+   ],
+   "version": [
+    "1",
+    "2"
+   ]
+  },
+  "awt/icon": {
+   "color": [
+    "inherit",
+    "text-primary",
+    "text-secondary",
+    "link-primary",
+    "support-error",
+    "support-success",
+    "support-warning",
+    "support-info"
+   ],
+   "size": [
+    "16",
+    "20",
+    "24",
+    "32"
+   ]
+  },
+  "awt/inline-set": {
+   "align": [
+    "start",
+    "center",
+    "end",
+    "between"
+   ],
+   "gap": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+   ],
+   "orientation": [
+    "horizontal",
+    "vertical"
+   ]
+  },
+  "awt/link": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ],
+   "target": [
+    "",
+    "_blank",
+    "_parent",
+    "_top"
+   ]
+  },
+  "awt/list": {
+   "type": [
+    "unordered",
+    "ordered",
+    "ordered-native"
+   ]
+  },
+  "awt/menu-button": {
+   "kind": [
+    "primary",
+    "secondary",
+    "tertiary",
+    "ghost"
+   ],
+   "menuAlignment": [
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+    "top",
+    "top-start",
+    "top-end"
+   ],
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/modal": {
+   "primaryTarget": [
+    "",
+    "_blank",
+    "_parent",
+    "_top"
+   ],
+   "size": [
+    "xs",
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/modal-opener": {
+   "kind": [
+    "primary",
+    "secondary",
+    "tertiary",
+    "ghost",
+    "danger"
+   ],
+   "size": [
+    "sm",
+    "md",
+    "lg",
+    "xl"
+   ]
+  },
+  "awt/notification": {
+   "kind": [
+    "info",
+    "success",
+    "warning",
+    "error"
+   ],
+   "variant": [
+    "inline",
+    "toast"
+   ]
+  },
+  "awt/password-input": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/pricing-tile": {
+   "ctaKind": [
+    "primary",
+    "secondary",
+    "tertiary",
+    "ghost"
+   ]
+  },
+  "awt/radio-button-group": {
+   "labelPosition": [
+    "left",
+    "right"
+   ],
+   "orientation": [
+    "horizontal",
+    "vertical"
+   ]
+  },
+  "awt/section": {
+   "backgroundColor": [
+    "",
+    "background",
+    "layer-01",
+    "layer-accent-01"
+   ],
+   "maxWidth": [
+    "none",
+    "narrow",
+    "content",
+    "wide",
+    "custom"
+   ],
+   "paddingBlock": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13"
+   ],
+   "paddingInline": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+    "13"
+   ],
+   "tagName": [
+    "section",
+    "div",
+    "article",
+    "aside"
+   ],
+   "themeScope": [
+    "inherit",
+    "light",
+    "dark",
+    "g10",
+    "g100"
+   ]
+  },
+  "awt/select": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  },
+  "awt/side-nav": {
+   "mode": [
+    "persistent",
+    "none"
+   ]
+  },
+  "awt/side-nav-link": {
+   "matchMode": [
+    "exact",
+    "prefix"
+   ]
+  },
+  "awt/stat": {
+   "align": [
+    "start",
+    "center"
+   ],
+   "level": [
+    "none",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+   ]
+  },
+  "awt/tabs": {
+   "orientation": [
+    "horizontal",
+    "vertical"
+   ]
+  },
+  "awt/tag": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ],
+   "target": [
+    "",
+    "_blank"
+   ],
+   "type": [
+    "red",
+    "magenta",
+    "purple",
+    "blue",
+    "cyan",
+    "teal",
+    "green",
+    "gray",
+    "cool-gray",
+    "warm-gray",
+    "high-contrast",
+    "outline"
+   ]
+  },
+  "awt/testimonial": {
+   "align": [
+    "start",
+    "center"
+   ],
+   "attributionStyle": [
+    "stacked",
+    "inline"
+   ],
+   "kind": [
+    "plain",
+    "card"
+   ],
+   "markStyle": [
+    "none",
+    "single-curved",
+    "double-curved",
+    "double-straight"
+   ],
+   "quoteSize": [
+    "md",
+    "lg",
+    "xl"
+   ],
+   "target": [
+    "",
+    "_blank"
+   ]
+  },
+  "awt/text-input": {
+   "size": [
+    "sm",
+    "md",
+    "lg"
+   ],
+   "type": [
+    "text",
+    "email",
+    "password",
+    "number",
+    "search",
+    "tel",
+    "url"
+   ]
+  },
+  "awt/tile": {
+   "variant": [
+    "default",
+    "clickable",
+    "selectable",
+    "expandable"
+   ]
+  },
+  "awt/toggle": {
+   "size": [
+    "sm",
+    "md"
+   ]
+  },
+  "awt/toggletip": {
+   "align": [
+    "top",
+    "top-start",
+    "top-end",
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+    "left",
+    "right"
+   ]
+  },
+  "awt/tooltip": {
+   "align": [
+    "top",
+    "top-start",
+    "top-end",
+    "bottom",
+    "bottom-start",
+    "bottom-end",
+    "left",
+    "right"
+   ]
+  }
+ },
+ "version": "2026.10.1"
+}
