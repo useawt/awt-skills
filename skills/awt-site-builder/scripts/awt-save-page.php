@@ -15,7 +15,9 @@
  * Before writing, it runs awt-check.php and refuses on any error. It keeps a
  * revision of the old content, writes through wp_slash() so attribute escapes
  * survive, and checks that what was stored is exactly what you sent.
- * It never publishes a new page, and never deletes anything.
+ * It never publishes a new page (awt-publish.php does that), and never deletes
+ * anything. When it replaces a page that is already live, it then checks the
+ * live page shows the new content.
  *
  * Changes are recorded under the first administrator. Add WP-CLI's own
  * --user=<login> to record them under the owner's account instead.
@@ -159,5 +161,6 @@ echo "✓ Saved ID $saved_id ({$stored->post_status}). Content hash: " . md5( $s
 echo 'View: ' . ( 'publish' === $stored->post_status ? get_permalink( $stored ) : get_preview_post_link( $stored ) ) . "\n";
 echo 'Edit: ' . admin_url( 'post.php?post=' . $saved_id . '&action=edit' ) . "\n";
 if ( 'publish' === $stored->post_status ) {
-	echo "If the site has a page cache, clear it so visitors see the change.\n";
+	list( $level, $message ) = awt_skill_verify_live( $stored );
+	echo ( 'OK' === $level ? '✓ ' : 'WARN  ' ) . $message . "\n";
 }

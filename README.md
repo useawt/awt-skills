@@ -3,8 +3,9 @@
 `awt-site-builder` teaches an AI agent to build and edit pages on a WordPress site
 that runs [AWT](https://useawt.com). It connects over SSH with WP-CLI, starts from
 AWT's own patterns, checks every page for broken blocks and accessibility problems,
-and saves drafts for you to review. It never publishes or overwrites your own edits
-without asking.
+and saves drafts for you to review. Once you approve a page, it publishes or
+schedules exactly that version and confirms the live page shows it. It never
+publishes or overwrites your own edits without asking.
 
 It uses the open [Agent Skills](https://agentskills.io) format, so the same folder
 works in Claude Code and in other agents that read `SKILL.md` files.
@@ -49,6 +50,7 @@ checks. See [connecting.md](skills/awt-site-builder/references/connecting.md).
 | `scripts/awt-catalog.php` | Lists the site's blocks, patterns, icons, presets and settings |
 | `scripts/awt-check.php` | Checks markup or a saved page before anyone sees it |
 | `scripts/awt-save-page.php` | Saves a draft, or replaces a page only if nobody edited it since |
+| `scripts/awt-publish.php` | Publishes or schedules the exact version you approved, then confirms the live page shows it |
 
 ## License
 

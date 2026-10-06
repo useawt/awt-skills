@@ -82,11 +82,14 @@ the check scripts need WP-CLI, so you lose `awt-check.php`.
 | Read a page (raw markup, last edit) | `GET /wp-json/wp/v2/pages/ID?context=edit` |
 | Save a new draft | `POST /wp-json/wp/v2/pages` with JSON `{"title":"...","content":"<markup>","status":"draft"}` |
 | Update a page | `POST /wp-json/wp/v2/pages/ID` with JSON `{"content":"<markup>"}` |
+| Publish or schedule an approved page | `POST /wp-json/wp/v2/pages/ID` with `{"status":"publish"}`, or `{"status":"future","date":"2026-10-20T09:00:00"}` (site time zone) |
 | Upload an image | `POST /wp-json/wp/v2/media` with the file, then `POST /wp-json/wp/v2/media/ID` with `{"alt_text":"..."}` |
 
 The same safety rules apply. Before updating a page, read it again and compare its
 `modified_gmt` with what you saw before; if it changed, the owner edited it, so
-stop and ask. WordPress keeps the old version as a revision.
+stop and ask. WordPress keeps the old version as a revision. After publishing,
+load the public URL with `curl -sL` and check the new words are there; if not,
+clear the page cache.
 
 Build the JSON body with a real JSON encoder (`jq`, Python), never by hand: the
 markup is full of quotes and backslashes.

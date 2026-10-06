@@ -241,6 +241,10 @@ if ( ! function_exists( 'awt_skill_check' ) ) {
 			}
 		}
 
+		foreach ( awt_skill_placeholders( $content ) as $placeholder ) {
+			$add( 'WARN', "Placeholder $placeholder is still in the page. The owner fills it in before it is published." );
+		}
+
 		$ids = array();
 		foreach ( $xp->query( '//*[@id]' ) as $el ) {
 			$ids[ $el->getAttribute( 'id' ) ][] = 1;
@@ -252,6 +256,87 @@ if ( ! function_exists( 'awt_skill_check' ) ) {
 		}
 
 		return $issues;
+	}
+
+	/**
+	 * Placeholders like [Price] or [Customer quote] left in the content.
+	 *
+	 * @param string $content Block markup.
+	 * @return string[]
+	 */
+	function awt_skill_placeholders( $content ) {
+		preg_match_all( '/\[[A-Z][A-Za-z ]{1,40}\]/', wp_strip_all_tags( do_blocks( $content ) ), $found );
+		return array_values( array_unique( $found[0] ) );
+	}
+
+	/**
+	 * Load a published page the way a visitor does and confirm it shows this content.
+	 * Returns [ 'OK'|'WARN', message ].
+	 *
+	 * The fingerprint is the longest run of plain words inside one element of the
+	 * rendered content: punctuation is left out because the live page curls quotes
+	 * and dashes, and it never spans two elements, so a plain text search of the
+	 * page's HTML finds it too.
+	 *
+	 * @param WP_Post $post A published post or page.
+	 * @return array
+	 */
+	function awt_skill_verify_live( $post ) {
+		$url             = get_permalink( $post );
+		$GLOBALS['post'] = $post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		setup_postdata( $post );
+		// Tags become spaces, so words in neighbouring elements never run together.
+		$flatten = static function ( $html ) {
+			$html = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $html );
+			$text = html_entity_decode( preg_replace( '/<[^>]+>/', ' ', $html ), ENT_QUOTES, 'UTF-8' );
+			return trim( preg_replace( '/\s+/u', ' ', $text ) );
+		};
+		$rendered = do_blocks( $post->post_content );
+		wp_reset_postdata();
+		$pieces = html_entity_decode( preg_replace( '/<[^>]+>/', "\n", preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', "\n", $rendered ) ), ENT_QUOTES, 'UTF-8' );
+		preg_match_all( '/[\p{L}\p{N}][\p{L}\p{N} ]{18,}[\p{L}\p{N}]/u', preg_replace( '/[ \t]+/u', ' ', $pieces ), $runs );
+		if ( ! $runs[0] ) {
+			return array( 'WARN', "Published. The page has too little text to check automatically: open $url and look at it." );
+		}
+		usort(
+			$runs[0],
+			static function ( $a, $b ) {
+				return strlen( $b ) - strlen( $a );
+			}
+		);
+		$finger = trim( mb_substr( $runs[0][0], 0, 60 ) );
+
+		$fetch = static function ( $address ) use ( $finger, $flatten ) {
+			$response = wp_remote_get(
+				$address,
+				array(
+					'timeout'    => 20,
+					// Some hosts block requests that do not look like a browser.
+					'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36',
+				)
+			);
+			if ( is_wp_error( $response ) ) {
+				return $response->get_error_message();
+			}
+			$code = wp_remote_retrieve_response_code( $response );
+			if ( 200 !== $code ) {
+				return "status $code";
+			}
+			return false !== mb_strpos( $flatten( wp_remote_retrieve_body( $response ) ), $finger );
+		};
+
+		$plain = $fetch( $url );
+		if ( true === $plain ) {
+			return array( 'OK', "The live page shows the new content: $url" );
+		}
+		$fresh = $fetch( add_query_arg( 'awt-check', time(), $url ) );
+		if ( true === $fresh ) {
+			return array( 'WARN', "The page is published, but visitors still get an old copy from the page cache. Clear the cache (see connecting.md), then check $url again." );
+		}
+		if ( is_string( $plain ) ) {
+			return array( 'WARN', "Published, but the server could not load its own page ($plain). Open $url yourself and look for: \"$finger\"" );
+		}
+		return array( 'WARN', "Published, but the live page does not show the new content. Open $url and look for: \"$finger\"" );
 	}
 }
 

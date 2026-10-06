@@ -54,6 +54,7 @@ if ( 'summary' === $mode ) {
 	$count = count( $awt_block_types() );
 	$awt_line( 'AWT blocks plugin: ' . ( $count ? ( $plugin ? $plugin : 'active' ) . ", $count blocks" : 'not active  <- install and activate it before building pages' ) );
 	$awt_line( 'Front page: ' . ( 'page' === get_option( 'show_on_front' ) ? 'page ' . get_option( 'page_on_front' ) : 'latest posts' ) );
+	$awt_line( 'Time zone: ' . wp_timezone_string() . ', site time now ' . current_time( 'Y-m-d H:i' ) );
 
 	$awt_line( "\nBLOCKS (name: title. description)" );
 	foreach ( $awt_block_types() as $name => $type ) {

@@ -1,12 +1,12 @@
 ---
 name: awt-site-builder
-description: Build and edit pages on a WordPress site that runs AWT, the accessibility-first block theme and blocks plugin built on IBM's Carbon Design System. Works over SSH with WP-CLI. Use when the user asks to create, redesign, restyle or update pages or sections on their AWT site, use AWT blocks or patterns, add images, or change AWT Settings. Every page stays accessible, nothing is published without the owner's yes, and the owner's own edits are never overwritten.
+description: Build and edit pages on a WordPress site that runs AWT, the accessibility-first block theme and blocks plugin built on IBM's Carbon Design System. Works over SSH with WP-CLI. Use when the user asks to create, redesign, restyle or update pages or sections on their AWT site, use AWT blocks or patterns, add images, or change AWT Settings. Every page stays accessible, nothing is published without the owner's yes (then it publishes or schedules, and confirms the live page), and the owner's own edits are never overwritten.
 license: GPL-3.0-or-later
 compatibility: Needs a shell that can reach the site over SSH (for example Claude Code), and WP-CLI on the server. The site needs the AWT theme and the AWT Blocks plugin.
 metadata:
   author: useawt
   homepage: https://useawt.com
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Building pages on an AWT site
@@ -23,7 +23,8 @@ Ask the owner for the SSH host alias (or host and user) and the WordPress folder
 if you do not know them. [references/connecting.md](references/connecting.md) has the
 setup steps for a site that has never been connected, and what to do without SSH.
 
-Copy the scripts to the server once, outside the public web folder:
+Copy the scripts to the server at the start of every session, outside the public
+web folder, so an older copy left there by an earlier session is replaced:
 
 ```bash
 ssh SITE 'mkdir -p ~/awt-skill'
@@ -108,14 +109,33 @@ ssh SITE 'cd WP && wp eval-file ~/awt-skill/awt-save-page.php file=$HOME/awt-ski
 
 ## 5. Publish only when the owner says so
 
-- **Replacing an existing page:** read its hash first
-  (`awt-catalog.php page ID`; `wp post get` adds a newline, so its md5 differs), then
-  `awt-save-page.php file=... id=ID expect=HASH`. It refuses if anyone edited the
-  page since you read it, or has unsaved changes open in the editor, and it keeps
-  the old content as a revision.
-- **Publishing a new draft:** `wp post update ID --post_status=publish`.
-- Clear the site's page cache afterwards, if it has one (see connecting.md).
-- Then open the public URL and confirm the new content is there.
+The owner approves one specific version: they look at the draft through its
+preview link and say to publish it. Words you showed them in chat are not the
+page. When you hand over a draft, note its hash (the save prints it; later,
+`awt-catalog.php page ID`; `wp post get` adds a newline, so its md5 differs). Publishing with that hash means exactly what they reviewed goes live:
+if they or anyone else changed the page since, the scripts refuse. Then read it
+again, tell the owner what changed, and ask again.
+
+- **A new page:** publish the approved draft, or schedule it in the site's own
+  time zone:
+  ```bash
+  ssh SITE 'cd WP && wp eval-file ~/awt-skill/awt-publish.php id=ID expect=HASH'
+  ssh SITE 'cd WP && wp eval-file ~/awt-skill/awt-publish.php id=ID expect=HASH at="2026-10-20 09:00"'
+  ```
+  It checks the page again and refuses on any error, on a page with no real title,
+  and on placeholders like `[Price]` still in it. It changes only the status and
+  date, never the content. Before scheduling, compare the site's time zone
+  (`awt-catalog.php` prints it) with the owner's, and confirm the time with them
+  when they differ.
+- **Replacing a live page:** `awt-save-page.php file=... id=ID expect=HASH`. It
+  refuses if anyone edited the page since you read it, or has unsaved changes open
+  in the editor, and keeps the old content as a revision.
+- Never publish with `wp post update --post_status=publish`: it skips every check.
+- Both scripts then load the live page the way a visitor does and say whether the
+  new content is there. If they report an old copy from the page cache, clear the
+  cache (see connecting.md) and check again. If the server cannot load its own
+  page, check it yourself: `curl -sL URL | grep -c "the words it names"` must be
+at least 1.
 
 ## 6. Site-wide changes
 

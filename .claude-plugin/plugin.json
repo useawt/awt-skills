@@ -1,7 +1,7 @@
 {
   "name": "awt",
   "description": "Build and edit pages on WordPress sites that run AWT, over SSH and WP-CLI. Accessible pages, drafts first, and the owner's own edits are never overwritten.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": { "name": "AWT", "url": "https://useawt.com" },
   "homepage": "https://useawt.com",
   "repository": "https://github.com/useawt/awt-skills",

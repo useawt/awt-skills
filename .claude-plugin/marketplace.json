@@ -7,7 +7,7 @@
       "name": "awt",
       "source": "./",
       "description": "Build and edit pages on WordPress sites that run AWT, over SSH and WP-CLI.",
-      "version": "1.0.0"
+      "version": "1.1.0"
     }
   ]
 }
