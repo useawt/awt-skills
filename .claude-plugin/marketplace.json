@@ -7,7 +7,7 @@
       "name": "awt",
       "source": "./",
       "description": "Install AWT, and build and edit pages on WordPress sites that run it, over SSH and WP-CLI.",
-      "version": "1.2.0"
+      "version": "2.0.0"
     }
   ]
 }

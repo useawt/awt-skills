@@ -1,12 +1,12 @@
 ---
-name: awt-site-builder
+name: awt-accessible-wordpress-site-builder
 description: Build and edit pages on a WordPress site that runs AWT, the accessibility-first block theme and blocks plugin built on IBM's Carbon Design System, and install or update AWT itself. Works over SSH with WP-CLI. Use when the user asks to install or update AWT on a WordPress site, to create, redesign, restyle or update pages or sections on their AWT site, use AWT blocks or patterns, add images, or change AWT Settings. Every page stays accessible, nothing is published or installed without the owner's yes (then it publishes or schedules, and confirms the live page), and the owner's own edits are never overwritten.
 license: GPL-3.0-or-later
 compatibility: Needs a shell that can reach the site over SSH (for example Claude Code), and WP-CLI on the server. The site needs WordPress; the skill can install the AWT theme and the AWT Blocks plugin.
 metadata:
   author: useawt
   homepage: https://useawt.com
-  version: "1.2.0"
+  version: "2.0.0"
 ---
 
 # Building pages on an AWT site

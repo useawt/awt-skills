@@ -1,6 +1,6 @@
 # AWT skills for AI agents
 
-`awt-site-builder` teaches an AI agent to build and edit pages on a WordPress site
+`awt-accessible-wordpress-site-builder` teaches an AI agent to build and edit pages on a WordPress site
 that runs [AWT](https://useawt.com). It connects over SSH with WP-CLI, starts from
 AWT's own patterns, checks every page for broken blocks and accessibility problems,
 and saves drafts for you to review. Once you approve a page, it publishes or
@@ -23,7 +23,7 @@ works in Claude Code and in other agents that read `SKILL.md` files.
 ```
 
 **Other agents** (Codex, GitHub Copilot, Cursor, Gemini CLI and others): copy
-`skills/awt-site-builder` into that agent's skills folder. Its documentation says
+`skills/awt-accessible-wordpress-site-builder` into that agent's skills folder. Its documentation says
 where.
 
 ```bash
@@ -42,7 +42,7 @@ Ask your agent something like:
 The first time, the agent walks you through giving it SSH access. You turn SSH on
 in your host's control panel and add the key it creates; it never needs your
 passwords. Hosts without SSH can use the WordPress REST API instead, with fewer
-checks. See [connecting.md](skills/awt-site-builder/references/connecting.md).
+checks. See [connecting.md](skills/awt-accessible-wordpress-site-builder/references/connecting.md).
 
 ## What is inside
 
