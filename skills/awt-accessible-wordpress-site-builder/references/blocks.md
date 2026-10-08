@@ -1,6 +1,6 @@
 # AWT blocks: attributes and allowed values
 
-Generated from AWT 2026.10.4. If the site runs a newer version, a block or value may
+Generated from AWT 2026.10.5. If the site runs a newer version, a block or value may
 be missing here: `awt-catalog.php block <name>` shows what the site really has, and
 the docs link under each block shows the current allowed values.
 
