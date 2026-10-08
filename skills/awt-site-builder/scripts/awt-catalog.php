@@ -40,7 +40,7 @@ $awt = function_exists( 'AWT\Theme\Settings\all' );
 
 if ( 'summary' === $mode ) {
 	$awt_line( 'Site: ' . home_url() . '  (WordPress ' . get_bloginfo( 'version' ) . ')' );
-	$awt_line( 'Theme: ' . $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ) . ( $awt ? '' : '  <- AWT is NOT the active theme' ) );
+	$awt_line( 'Theme: ' . $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ) . ( $awt ? '' : '  <- AWT is NOT the active theme. To install it: awt-install-check.php' ) );
 	if ( ! function_exists( 'get_plugin_data' ) ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
@@ -52,9 +52,13 @@ if ( 'summary' === $mode ) {
 		}
 	}
 	$count = count( $awt_block_types() );
-	$awt_line( 'AWT blocks plugin: ' . ( $count ? ( $plugin ? $plugin : 'active' ) . ", $count blocks" : 'not active  <- install and activate it before building pages' ) );
+	$awt_line( 'AWT blocks plugin: ' . ( $count ? ( $plugin ? $plugin : 'active' ) . ", $count blocks" : 'not active  <- install and activate it before building pages: awt-install-check.php' ) );
 	$awt_line( 'Front page: ' . ( 'page' === get_option( 'show_on_front' ) ? 'page ' . get_option( 'page_on_front' ) : 'latest posts' ) );
 	$awt_line( 'Time zone: ' . wp_timezone_string() . ', site time now ' . current_time( 'Y-m-d H:i' ) );
+	if ( ! $awt && ! $count ) {
+		$awt_line( "\nAWT is not installed here. SKILL.md section 7 says how to install it." );
+		return;
+	}
 
 	$awt_line( "\nBLOCKS (name: title. description)" );
 	foreach ( $awt_block_types() as $name => $type ) {

@@ -1,12 +1,12 @@
 ---
 name: awt-site-builder
-description: Build and edit pages on a WordPress site that runs AWT, the accessibility-first block theme and blocks plugin built on IBM's Carbon Design System. Works over SSH with WP-CLI. Use when the user asks to create, redesign, restyle or update pages or sections on their AWT site, use AWT blocks or patterns, add images, or change AWT Settings. Every page stays accessible, nothing is published without the owner's yes (then it publishes or schedules, and confirms the live page), and the owner's own edits are never overwritten.
+description: Build and edit pages on a WordPress site that runs AWT, the accessibility-first block theme and blocks plugin built on IBM's Carbon Design System, and install or update AWT itself. Works over SSH with WP-CLI. Use when the user asks to install or update AWT on a WordPress site, to create, redesign, restyle or update pages or sections on their AWT site, use AWT blocks or patterns, add images, or change AWT Settings. Every page stays accessible, nothing is published or installed without the owner's yes (then it publishes or schedules, and confirms the live page), and the owner's own edits are never overwritten.
 license: GPL-3.0-or-later
-compatibility: Needs a shell that can reach the site over SSH (for example Claude Code), and WP-CLI on the server. The site needs the AWT theme and the AWT Blocks plugin.
+compatibility: Needs a shell that can reach the site over SSH (for example Claude Code), and WP-CLI on the server. The site needs WordPress; the skill can install the AWT theme and the AWT Blocks plugin.
 metadata:
   author: useawt
   homepage: https://useawt.com
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
 # Building pages on an AWT site
@@ -24,15 +24,16 @@ if you do not know them. [references/connecting.md](references/connecting.md) ha
 setup steps for a site that has never been connected, and what to do without SSH.
 
 Copy the scripts to the server at the start of every session, outside the public
-web folder, so an older copy left there by an earlier session is replaced:
+web folder, so an older copy left there by an earlier session is replaced. Run
+this from the skill's own folder. The folder is private to the SSH user, because
+backups go there too:
 
 ```bash
-ssh SITE 'mkdir -p ~/awt-skill'
+ssh SITE 'mkdir -p ~/awt-skill && chmod 700 ~/awt-skill'
 scp scripts/* SITE:~/awt-skill/
 ```
 
-Run that from the skill's own folder. Every command after that runs from the
-WordPress folder (`WP` below):
+Every command after that runs from the WordPress folder (`WP` below):
 
 ```bash
 ssh SITE 'cd WP && wp eval-file ~/awt-skill/awt-catalog.php'
@@ -41,7 +42,7 @@ ssh SITE 'cd WP && wp eval-file ~/awt-skill/awt-catalog.php'
 The summary prints the site URL, the AWT version, every AWT block and pattern,
 and the presets (font sizes, spacing, colors). **Check the URL is the site the
 owner means before you change anything.** If AWT is not the active theme or the
-plugin is missing, stop and tell the owner.
+plugin is missing, tell the owner and offer to install it (section 7).
 
 Other catalog commands:
 
@@ -152,6 +153,24 @@ Ask the owner before any site-wide change; it affects every page. For the header
 footer and templates, prefer telling the owner where to change it in the Site
 Editor or AWT Settings screen over editing them yourself.
 
+## 7. Install or update AWT
+
+When the owner asks to install or update AWT, or section 1 finds it missing, run
+the install check. It changes nothing; it says what to run and what that changes:
+
+```bash
+ssh SITE 'cd WP && wp eval-file ~/awt-skill/awt-install-check.php'
+```
+
+- **STOP:** tell the owner what it says. Do not work around it.
+- **UP TO DATE:** nothing to do.
+- **READY:** tell the owner what changes and wait for a clear yes. Then back up
+  (Safety rule 4), run the printed commands in order, and run the check again:
+  it must say UP TO DATE.
+
+[references/installing.md](references/installing.md) has the full steps, updates,
+servers that cannot download, and sites without SSH.
+
 ## Safety
 
 These rules protect the owner's site. Follow them even when asked to hurry.
@@ -163,17 +182,25 @@ These rules protect the owner's site. Follow them even when asked to hurry.
 3. **Never delete.** Move pages to the trash (`wp post delete ID`, never with
    `--force`). Media cannot go to the trash, so never remove media; tell the owner
    what could go. Never run `wp db reset`, `wp site empty`, or `DROP`.
-4. **Back up before bulk changes** (more than one page, search-replace, settings):
-   `wp db export ~/awt-skill/backup-$(date +%Y%m%d-%H%M).sql --tables="$(wp db tables --format=csv)"`.
+4. **Back up before bulk changes** (more than one page, search-replace, settings,
+   installing or updating AWT):
+   ```bash
+   ssh SITE 'cd WP && wp db export ~/awt-skill/backup-$(date +%Y%m%d-%H%M).sql --tables="$(wp db tables --format=csv)"'
+   ```
    That saves WordPress's own tables (pages, media records, settings), which is
    everything this skill changes, and nothing from other sites sharing the
-   database. Keep the newest three and remove older ones. Run `wp search-replace` with
-   `--dry-run` first and show the owner the count.
+   database. Keep the newest three of each kind of backup and remove older ones:
+   ```bash
+   ssh SITE 'cd ~/awt-skill && ls -1r backup-*.sql | tail -n +4 | while read -r f; do rm -- "$f"; done'
+   ```
+   (The same with `settings-*.json`.) Run `wp search-replace` with `--dry-run`
+   first and show the owner the count.
 5. **Write content only through `awt-save-page.php`** or `wp_update_post( wp_slash( ... ) )`.
    Never raw SQL: it silently strips the backslashes in attribute escapes.
 6. **Do not touch code on the server.** No editing theme or plugin files, no
    installing, updating or removing plugins or themes, no changes to `wp-config.php`,
-   unless the owner asks for that exact thing.
+   unless the owner asks for that exact thing. Installing or updating AWT itself
+   goes through section 7, and only with the commands its check prints.
 7. **Credentials stay private.** Never print, copy or store passwords, keys or salts
    from `wp-config.php` or elsewhere. Never create users or log-in sessions.
 8. **Clean up.** Remove your temporary files from `~/awt-skill/` when you finish,

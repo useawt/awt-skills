@@ -62,7 +62,8 @@ clear it from the host's panel or the cache plugin's menu.
 ## Without SSH: the WordPress REST API
 
 Every WordPress site has a REST API. It can read the catalog and save drafts, but
-the check scripts need WP-CLI, so you lose `awt-check.php`.
+the check scripts need WP-CLI, so you lose `awt-check.php`. It cannot install AWT;
+[installing.md](installing.md) says how the owner does that in wp-admin.
 
 1. **Owner:** in WordPress, go to Users, then Profile, then Application Passwords.
    Create one named for the agent. Save it in a file only the owner can read, so
