@@ -101,8 +101,9 @@ wp-admin. Give them the two links of the newest release from the release list,
 then these steps:
 
 1. Plugins, Add Plugin, Upload Plugin: choose `awt-blocks.zip`, install, activate.
+   Before WordPress 6.8 the button says "Add New Plugin".
 2. Appearance, Themes, Add Theme, Upload Theme: choose `awt.zip`, install,
-   activate.
+   activate. Before WordPress 6.8 the button says "Add New Theme".
 3. When updating, WordPress asks whether to replace the version that is there.
    For the plugin, choose "Replace current with uploaded". For the theme, choose
    "Replace installed with uploaded" ("Replace active with uploaded" before
