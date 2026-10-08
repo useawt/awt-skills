@@ -104,8 +104,9 @@ then these steps:
 2. Appearance, Themes, Add Theme, Upload Theme: choose `awt.zip`, install,
    activate.
 3. When updating, WordPress asks whether to replace the version that is there.
-   Choose "Replace current with uploaded" for the plugin and "Replace installed
-   with uploaded" for the theme. Settings, pages and Site Editor changes are kept.
+   For the plugin, choose "Replace current with uploaded". For the theme, choose
+   "Replace installed with uploaded" ("Replace active with uploaded" before
+   WordPress 6.8). Settings, pages and Site Editor changes are kept.
 
 Then confirm with the REST API (see connecting.md for the application password):
 `GET /wp-json/wp/v2/themes?status=active` must show `awt` and the version, and
