@@ -1,6 +1,6 @@
 # AWT blocks: attributes and allowed values
 
-Generated from AWT 2026.10.8. If the site runs a newer version, a block or value may
+Generated from AWT 2026.10.9. If the site runs a newer version, a block or value may
 be missing here: `awt-catalog.php block <name>` shows what the site really has, and
 the docs link under each block shows the current allowed values.
 
@@ -77,7 +77,7 @@ Docs: https://useawt.com/blocks/checkbox/
 - `checked` (boolean = `false`). Starts the control in its checked state.
 - `disabled` (boolean = `false`). Renders the disabled state. Disabled controls are skipped by keyboard focus, so prefer hiding over disabling when you can.
 - `indeterminate` (boolean = `false`). The partially-checked state, for a parent checkbox whose children are mixed.
-- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers.
+- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers. Following Carbon, a required field shows no mark: when most fields in a form are required, add (optional) to the labels of the others.
 - `helperText` (string). A short hint under the control, linked to it for screen readers.
 - `invalid` (boolean = `false`). Renders the error state.
 - `invalidText` (string). The error message. It is announced to screen readers, not just colored red.
@@ -135,7 +135,6 @@ Docs: https://useawt.com/blocks/content-switcher/
 A data table with sortable columns, a sticky header and striped rows.
 Docs: https://useawt.com/blocks/data-table/
 
-- `dataSource` (object)
 - `headers` (array = `[{"key": "name", "text": "Name"}, {"key": "type", "text": "Type"}, {"key": "owner", "text": "Owner"}]`). The columns: a key and visible text each, plus an optional cell type such as boolean.
 - `rows` (array = `[{"name": "Load balancer", "type": "HTTP", "owner": "Maria S."}, {"name": "Database", "type": "PostgreSQL", "owner": "Aisha K."}, {"name": "Object storage", "type": "S3", "owner": "Diego R."}]`). The data, one object per row keyed by the column keys.
 - `size` (string = `"md"`). Allowed: xs, sm, md, lg, xl. The control height.
@@ -330,7 +329,6 @@ Docs: https://useawt.com/blocks/link/
 A bulleted or numbered list styled to match your site.
 Docs: https://useawt.com/blocks/list/
 
-- `dataSource` (object)
 - `type` (string = `"unordered"`). Allowed: unordered, ordered, ordered-native. Bullets, Carbon-styled numbering, or the browser’s native numbering.
 - `isExpressive` (boolean = `false`). Slightly larger, editorial type.
 - `nested` (boolean = `false`). Indents this list one level, for building nested lists.
@@ -418,7 +416,7 @@ Docs: https://useawt.com/blocks/password-input/
 - `warn` (boolean = `false`). Renders the warning state: something needs attention but does not block submission.
 - `warnText` (string). The warning message shown and announced in the warning state.
 - `disabled` (boolean = `false`). Renders the disabled state. Disabled controls are skipped by keyboard focus, so prefer hiding over disabling when you can.
-- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers.
+- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers. Following Carbon, a required field shows no mark: when most fields in a form are required, add (optional) to the labels of the others.
 - `size` (string = `"md"`). Allowed: sm, md, lg. The control height.
 - `hideLabel` (boolean = `false`). Visually hides the label while keeping it for screen readers. Use only when the context makes the purpose obvious.
 - `showLabel` (string = `"Show password"`). The reveal button’s label while the password is hidden.
@@ -466,7 +464,7 @@ Docs: https://useawt.com/blocks/radio-button-group/
 - `helperText` (string). A short hint under the control, linked to it for screen readers.
 - `invalid` (boolean = `false`). Renders the error state.
 - `invalidText` (string). The error message. It is announced to screen readers, not just colored red.
-- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers.
+- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers. Following Carbon, a required field shows no mark: when most fields in a form are required, add (optional) to the labels of the others.
 
 ## awt/section: Section
 
@@ -495,7 +493,7 @@ Docs: https://useawt.com/blocks/select/
 - `invalid` (boolean = `false`). Renders the error state.
 - `invalidText` (string). The error message. It is announced to screen readers, not just colored red.
 - `disabled` (boolean = `false`). Renders the disabled state. Disabled controls are skipped by keyboard focus, so prefer hiding over disabling when you can.
-- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers.
+- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers. Following Carbon, a required field shows no mark: when most fields in a form are required, add (optional) to the labels of the others.
 - `size` (string = `"md"`). Allowed: sm, md, lg. The control height.
 - `hideLabel` (boolean = `false`). Visually hides the label while keeping it for screen readers. Use only when the context makes the purpose obvious.
 - `placeholder` (string = `"Choose…"`). Ghost text inside the empty field. Never use it instead of a label.
@@ -559,8 +557,6 @@ Docs: https://useawt.com/blocks/stat/
 - `description` (string). A line of context under the heading.
 - `level` (string = `"none"`). Allowed: none, 2, 3, 4, 5, 6. By default the label is plain text, not a heading. Set a level (2 to 6) only when the stat should appear in the page outline.
 - `align` (string = `"start"`). Allowed: start, center. How the content aligns.
-- `sparkline` (string)
-- `sparklineLabel` (string)
 
 ## awt/tab: Tab
 
@@ -642,7 +638,7 @@ Docs: https://useawt.com/blocks/text-area/
 - `warnText` (string). The warning message shown and announced in the warning state.
 - `disabled` (boolean = `false`). Renders the disabled state. Disabled controls are skipped by keyboard focus, so prefer hiding over disabling when you can.
 - `readonly` (boolean = `false`). Makes the field read-only: visible and focusable, but not editable.
-- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers.
+- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers. Following Carbon, a required field shows no mark: when most fields in a form are required, add (optional) to the labels of the others.
 - `maxlength` (number = `0`). The maximum number of characters accepted.
 - `hideLabel` (boolean = `false`). Visually hides the label while keeping it for screen readers. Use only when the context makes the purpose obvious.
 - `carbonDefault` (boolean = `false`). Uses Carbon’s own field look (a shaded fill with one line under the text) instead of AWT’s default border on all four sides.
@@ -664,7 +660,7 @@ Docs: https://useawt.com/blocks/text-input/
 - `warnText` (string). The warning message shown and announced in the warning state.
 - `disabled` (boolean = `false`). Renders the disabled state. Disabled controls are skipped by keyboard focus, so prefer hiding over disabling when you can.
 - `readonly` (boolean = `false`). Makes the field read-only: visible and focusable, but not editable.
-- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers.
+- `required` (boolean = `false`). Marks the field as required, in the markup and for screen readers. Following Carbon, a required field shows no mark: when most fields in a form are required, add (optional) to the labels of the others.
 - `size` (string = `"md"`). Allowed: sm, md, lg. The control height.
 - `hideLabel` (boolean = `false`). Visually hides the label while keeping it for screen readers. Use only when the context makes the purpose obvious.
 - `inline` (boolean = `false`). Puts the label beside the field instead of above it.
