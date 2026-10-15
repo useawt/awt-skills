@@ -1,6 +1,6 @@
 # AWT blocks: attributes and allowed values
 
-Generated from AWT 2026.10.9. If the site runs a newer version, a block or value may
+Generated from AWT 2026.10.10. If the site runs a newer version, a block or value may
 be missing here: `awt-catalog.php block <name>` shows what the site really has, and
 the docs link under each block shows the current allowed values.
 
@@ -385,7 +385,7 @@ Docs: https://useawt.com/blocks/modal-opener/
 A notification, shown inline or as a toast. Screen readers announce it.
 Docs: https://useawt.com/blocks/notification/
 
-- `kind` (string = `"info"`). Allowed: info, success, warning, error. The status this notification communicates.
+- `kind` (string = `"info"`). Allowed: info, success, warning, error. The status this notification communicates. Screen readers hear it before the title, for example "Warning:".
 - `title` (string = `"Notification"`). The bold lead text.
 - `subtitle` (string). The detail after the title.
 - `caption` (string). Small extra text, shown only in the toast variant.
