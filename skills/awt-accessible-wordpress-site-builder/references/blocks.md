@@ -1,6 +1,6 @@
 # AWT blocks: attributes and allowed values
 
-Generated from AWT 2026.10.10. If the site runs a newer version, a block or value may
+Generated from AWT 2026.10.11. If the site runs a newer version, a block or value may
 be missing here: `awt-catalog.php block <name>` shows what the site really has, and
 the docs link under each block shows the current allowed values.
 
@@ -591,7 +591,7 @@ Docs: https://useawt.com/blocks/tag/
 - `text` (string = `"Tag"`). The visible text.
 - `type` (string = `"gray"`). Allowed: red, magenta, purple, blue, cyan, teal, green, gray, cool-gray, warm-gray, high-contrast, outline. The tag’s color, from Carbon’s tag palette. Every pairing meets contrast requirements.
 - `size` (string = `"md"`). Allowed: sm, md, lg. The control height.
-- `filter` (boolean = `false`). Adds a dismiss button, for removable filter tags.
+- `filter` (boolean = `false`). Adds a dismiss button that removes the tag, for removable filter tags. The button names the tag it removes.
 - `href` (string). Makes the tag a link.
 - `target` (string). Allowed: empty, _blank. Where the link opens, for example _blank for a new tab. A link that opens a new tab tells screen reader users so.
 - `rel` (string). The link’s rel attribute, for example nofollow. Set it only when you need to control it yourself.
