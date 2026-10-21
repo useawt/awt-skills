@@ -1,6 +1,6 @@
 # AWT blocks: attributes and allowed values
 
-Generated from AWT 2026.10.11. If the site runs a newer version, a block or value may
+Generated from AWT 2026.10.12. If the site runs a newer version, a block or value may
 be missing here: `awt-catalog.php block <name>` shows what the site really has, and
 the docs link under each block shows the current allowed values.
 
@@ -30,6 +30,7 @@ Docs: https://useawt.com/blocks/accordion/
 - `title` (string = `"Section"`). The section heading shown in the always-visible row.
 - `defaultExpanded` (boolean = `false`). Starts this item open.
 - `disabled` (boolean = `false`). Renders the section unopenable, and announces it as disabled.
+- `level` (string = `"3"`). Allowed: 2, 3, 4, 5, 6. The heading level, so the item fits your page outline.
 
 ## awt/breadcrumb: Breadcrumb
 
@@ -716,7 +717,7 @@ Docs: https://useawt.com/blocks/toggletip/
 
 ## awt/tooltip: Tooltip
 
-A short hint that appears when visitors hover over or focus text, an icon or a button.
+A short hint on underlined text. It opens on hover, focus or tap.
 Docs: https://useawt.com/blocks/tooltip/
 
 - `description` (string = `"Tooltip text"`). The tooltip text.
